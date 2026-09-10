@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cómo encender la estufa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #1a1612;
+    --bg2: #231e18;
+    --card: #2a231b;
+    --accent: #d4883a;
+    --text: #f0e8dc;
+    --text2: #c8b89a;
+    --text3: #8a7460;
+    --border: rgba(212,136,58,0.2);
+    --radius: 16px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  .screen { display:none; min-height:100vh; }
+  .screen.active { display:flex; flex-direction:column; }
+
+  /* ─── SCREEN 1 ─── */
+  #screen-lang {
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(212,136,58,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(212,136,58,0.08) 0%, transparent 60%),
+      var(--bg);
+  }
+
+  .brand-icon {
+    width: 86px; height: 86px;
+    margin-bottom: 28px;
+    filter: drop-shadow(0 4px 20px rgba(212,136,58,0.4));
+  }
+
+  .titles-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .title-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .title-flag { font-size: 22px; flex-shrink: 0; }
+
+  .title-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-align: left;
+    line-height: 1.2;
+    font-size: clamp(20px, 5vw, 30px);
+    color: var(--text);
+  }
+
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 28px auto;
+  }
+
+  .enter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: linear-gradient(135deg, var(--accent), #b86820);
+    border: none;
+    border-radius: var(--radius);
+    padding: 20px 40px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 6px 24px rgba(212,136,58,0.35);
+  }
+
+  .enter-btn:hover, .enter-btn:active {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(212,136,58,0.5);
+  }
+
+  .enter-btn-icon { font-size: 28px; }
+  .enter-btn-arrow { font-size: 28px; color: #1a1612; font-weight: 700; line-height: 1; }
+
+  /* ─── SCREEN 2 ─── */
+  #screen-guide { background: var(--bg); }
+
+  .page-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+
+  .back-btn {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 22px;
+    cursor: pointer;
+    display: flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    transition: all 0.2s;
+    line-height:1;
+  }
+  .back-btn:hover { background: #342c22; border-color: var(--accent); }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .content-wrap {
+    padding: 22px 16px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 560px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .warn-box {
+    background: var(--card);
+    border: 1px solid rgba(212,136,58,0.3);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .warn-box-icon { font-size: 20px; flex-shrink: 0; }
+  .warn-box-lines { display: flex; flex-direction: column; gap: 4px; }
+  .warn-box-lines p { font-size: 12.5px; color: var(--text); line-height: 1.45; }
+
+  /* panel diagram */
+  .panel-card {
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    padding: 14px 10px 18px;
+  }
+  .panel-card svg { display:block; width:100%; height:auto; }
+
+  /* section headers */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .steps-wrap { display: flex; flex-direction: column; gap: 12px; }
+
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #b86820);
+    display: flex; align-items:center; justify-content:center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1612;
+    flex-shrink:0;
+  }
+
+  .step-titles { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .step-title-line {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .step-title-line.sub { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; color: var(--text3); }
+  .step-title-line .flag { font-size: 13px; flex-shrink:0; }
+
+  .timer-chip {
+    flex-shrink: 0;
+    background: rgba(212,136,58,0.15);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 20px;
+    padding: 5px 11px;
+    white-space: nowrap;
+  }
+
+  .sep {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ SCREEN 1 ════════ -->
+<div id="screen-lang" class="screen active">
+
+  <svg class="brand-icon" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="10" width="70" height="52" rx="8" fill="#2a231b" stroke="#d4883a" stroke-width="1.5"/>
+    <line x1="18" y1="22" x2="72" y2="22" stroke="#5a4a38" stroke-width="1.4"/>
+    <line x1="18" y1="30" x2="72" y2="30" stroke="#5a4a38" stroke-width="1.4"/>
+    <line x1="18" y1="38" x2="72" y2="38" stroke="#5a4a38" stroke-width="1.4"/>
+    <line x1="18" y1="46" x2="72" y2="46" stroke="#5a4a38" stroke-width="1.4"/>
+    <line x1="18" y1="54" x2="72" y2="54" stroke="#5a4a38" stroke-width="1.4"/>
+    <rect x="4" y="62" width="82" height="16" rx="5" fill="#231e18" stroke="#3a3028" stroke-width="1"/>
+    <circle cx="45" cy="70" r="9" fill="none" stroke="#d4883a" stroke-width="1.8"/>
+    <circle cx="45" cy="70" r="4" fill="none" stroke="#d4883a" stroke-width="1.2"/>
+    <circle cx="45" cy="70" r="1.3" fill="#d4883a"/>
+    <path d="M44 60 Q42 56 45 53 Q43 57 46 55 Q44 58 45 60 Z" fill="#e05a3a" opacity="0.85"/>
+    <circle cx="20" cy="70" r="3" fill="#342c22" stroke="#d4883a" stroke-width="1"/>
+    <circle cx="70" cy="70" r="3" fill="#342c22" stroke="#d4883a" stroke-width="1"/>
+  </svg>
+
+  <div class="titles-block">
+    <div class="title-line">
+      <span class="title-flag">🇦🇷</span>
+      <span class="title-text">Cómo encender la estufa</span>
+    </div>
+    <div class="title-line">
+      <span class="title-flag">🇬🇧</span>
+      <span class="title-text">How to light the heating</span>
+    </div>
+    <div class="title-line">
+      <span class="title-flag">🇧🇷</span>
+      <span class="title-text">Como acender a estufa</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <button class="enter-btn" onclick="openGuide()">
+    <span class="enter-btn-icon">▶</span>
+    <span class="enter-btn-arrow">›</span>
+  </button>
+
+</div>
+
+
+<!-- ════════ SCREEN 2 ════════ -->
+<div id="screen-guide" class="screen">
+
+  <div class="page-header">
+    <button class="back-btn" onclick="goBack()">‹</button>
+    <div class="header-title">🇦🇷 Cómo encender la estufa &nbsp;·&nbsp; 🇬🇧 How to light the heating &nbsp;·&nbsp; 🇧🇷 Como acender a estufa</div>
+  </div>
+
+  <div class="content-wrap">
+
+
+    <!-- Panel de controles -->
+    <div class="panel-card">
+      <svg width="100%" viewBox="0 0 640 710" xmlns="http://www.w3.org/2000/svg" role="img">
+      <title>Perilla de regulación de temperatura y botón encendedor piezoeléctrico</title>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#d4883a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- Panel del calefactor -->
+      <path d="M 148,160 H 492 A 18,18 0 0 1 510,178 V 372 A 18,18 0 0 1 492,390 H 225 A 95,95 0 0 1 130,295 V 178 A 18,18 0 0 1 148,160 Z" fill="none" stroke="#c8b89a" stroke-width="2"/>
+      <line x1="158" y1="188" x2="268" y2="188" stroke="#5a4a38" stroke-width="2" stroke-linecap="round"/>
+      <line x1="158" y1="204" x2="268" y2="204" stroke="#5a4a38" stroke-width="2" stroke-linecap="round"/>
+      <line x1="158" y1="220" x2="268" y2="220" stroke="#5a4a38" stroke-width="2" stroke-linecap="round"/>
+      <line x1="158" y1="236" x2="268" y2="236" stroke="#5a4a38" stroke-width="2" stroke-linecap="round"/>
+      <line x1="158" y1="252" x2="268" y2="252" stroke="#5a4a38" stroke-width="2" stroke-linecap="round"/>
+      <!-- Perilla de temperatura -->
+      <circle cx="430" cy="246" r="56" fill="none" stroke="#f0e8dc" stroke-width="2.2"/>
+      <line x1="430" y1="246" x2="464.4" y2="229.9" stroke="#d4883a" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="430" cy="246" r="4" fill="#d4883a"/>
+      <!-- Iconos de posicion sobre la perilla: chispa piloto, llama chica (minimo), llama grande (maximo), punto (cerrado) -->
+      <path d="M 464.0841062890239,172.5924889805809 L 472.1341062890239,181.79248898058088 L 467.53410628902395,181.79248898058088 L 473.28410628902395,195.5924889805809 L 465.23410628902394,185.2424889805809 L 469.8341062890239,185.2424889805809 Z" fill="#d4883a"/>
+      <path d="M 368.51219633130484,218.0 C 361.76219633130484,212.0 364.01219633130484,204.5 367.76219633130484,200.75 C 367.01219633130484,206.0 370.01219633130484,207.5 370.01219633130484,209.75 C 370.01219633130484,206.0 373.76219633130484,208.25 373.76219633130484,212.0 C 373.76219633130484,215.75 371.51219633130484,218.0 368.51219633130484,218.0 Z" fill="#d4883a"/>
+      <path d="M 365.65214712039784,287.5058965835897 C 355.3021471203978,278.3058965835897 358.75214712039786,266.8058965835897 364.50214712039786,261.0558965835897 C 363.35214712039783,269.1058965835897 367.95214712039785,271.40589658358965 367.95214712039785,274.8558965835897 C 367.95214712039785,269.1058965835897 373.70214712039785,272.5558965835897 373.70214712039785,278.3058965835897 C 373.70214712039785,284.0558965835897 370.25214712039786,287.5058965835897 365.65214712039784,287.5058965835897 Z" fill="#d4883a"/>
+      <circle cx="491.5" cy="281.5" r="5.5" fill="#d4883a"/>
+      <!-- Boton encendedor piezoelectrico -->
+      <circle cx="300" cy="352" r="27" fill="#2a231b" stroke="#f0e8dc" stroke-width="2.2"/>
+      <circle cx="300" cy="352" r="12" fill="none" stroke="#c8b89a" stroke-width="1.6"/>
+      <path d="M 296.6,343.5 L 302.55,350.3 L 299.15,350.3 L 303.4,360.5 L 297.45,352.85 L 300.85,352.85 Z" fill="#d4883a"/>
+      <!-- Texto: Perilla de regulacion de temperatura (ES / EN / PT) -->
+      <text x="430" y="44" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="15.5" fill="#f0e8dc">Perilla de regulación de temperatura</text>
+      <text x="430" y="66" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" fill="#c8b89a">🇬🇧 Temperature control knob</text>
+      <text x="430" y="84" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" fill="#c8b89a">🇧🇷 Botão de regulação de temperatura</text>
+      <line x1="430" y1="118" x2="430" y2="178" stroke="#d4883a" stroke-width="1.6" marker-end="url(#arrow)"/>
+      <!-- Texto: Boton encendedor piezoelectrico (ES / EN / PT) -->
+      <line x1="300" y1="422" x2="300" y2="387" stroke="#d4883a" stroke-width="1.6" marker-end="url(#arrow)"/>
+      <text x="300" y="444" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="15.5" fill="#f0e8dc">Botón encendedor piezoeléctrico</text>
+      <text x="300" y="466" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" fill="#c8b89a">🇬🇧 Piezoelectric igniter button</text>
+      <text x="300" y="484" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="12" fill="#c8b89a">🇧🇷 Botão acendedor piezoelétrico</text>
+      <line x1="60" y1="520" x2="580" y2="520" stroke="#c8b89a" stroke-width="0.7" opacity="0.25"/>
+      <!-- Leyenda: Piloto (ES / EN / PT) -->
+      <path d="M 145.6,564.0 L 153.3,572.8 L 148.9,572.8 L 154.4,586.0 L 146.7,576.1 L 151.1,576.1 Z" fill="#d4883a"/>
+      <text x="176" y="563" text-anchor="start" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="14.5" fill="#f0e8dc">Piloto</text>
+      <text x="176" y="580" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇬🇧 Pilot</text>
+      <text x="176" y="595" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇧🇷 Piloto</text>
+      <!-- Leyenda: Mínimo (ES / EN / PT) -->
+      <path d="M 400,582.7 C 393.07,576.54 395.38,568.84 399.23,564.99 C 398.46,570.38 401.54,571.92 401.54,574.23 C 401.54,570.38 405.39,572.69 405.39,576.54 C 405.39,580.39 403.08,582.7 400,582.7 Z" fill="#d4883a"/>
+      <text x="426" y="563" text-anchor="start" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="14.5" fill="#f0e8dc">Mínimo</text>
+      <text x="426" y="580" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇬🇧 Minimum</text>
+      <text x="426" y="595" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇧🇷 Mínimo</text>
+      <!-- Leyenda: Máximo (ES / EN / PT) -->
+      <path d="M 150,661.55 C 139.605,652.31 143.07,640.76 148.845,634.985 C 147.69,643.07 152.31,645.38 152.31,648.845 C 152.31,643.07 158.085,646.535 158.085,652.31 C 158.085,658.085 154.62,661.55 150,661.55 Z" fill="#d4883a"/>
+      <text x="176" y="638" text-anchor="start" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="14.5" fill="#f0e8dc">Máximo</text>
+      <text x="176" y="655" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇬🇧 Maximum</text>
+      <text x="176" y="670" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇧🇷 Máximo</text>
+      <!-- Leyenda: Cerrado (ES / EN / PT) -->
+      <circle cx="400" cy="650" r="5" fill="#d4883a"/>
+      <text x="426" y="638" text-anchor="start" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="14.5" fill="#f0e8dc">Cerrado</text>
+      <text x="426" y="655" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇬🇧 Closed</text>
+      <text x="426" y="670" text-anchor="start" font-family="'DM Sans', Arial, sans-serif" font-size="11" fill="#c8b89a">🇧🇷 Fechado</text>
+      </svg>
+    </div>
+
+    <!-- ENCENDIDO -->
+    <div class="section-title">🔥 Encendido</div>
+
+    <div class="steps-wrap">
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-titles">
+          <div class="step-title-line"><span class="flag">🇦🇷</span>Abra la llave de gas</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Open gas valve &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Abra o registro</div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-titles">
+          <div class="step-title-line"><span class="flag">🇦🇷</span>Posicionar perilla en Piloto y presionarla. Dar disparo de encendedor píezoeléctrico manteniendo presionada la perilla de regulación</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Turn to Pilot and press the knob. Hit the Igniter while pressing the knob &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Posicionar o botão em Piloto e pressioná-lo. Acionar o acendedor enquanto mantém pressionado o botão regulador.</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-titles">
+          <div class="step-title-line"><span class="flag">🇦🇷</span>Mantenga presionada la perilla de regulación durante 10" o más si es necesario para que la llama quede encendida</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Press and hold the control knob for 10 seconds or longer if necessary to keep the flame lit &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Mantenha o botão de regulagem pressionado por 10" ou mais, se necessário, para que a chama continue acesa</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-titles">
+          <div class="step-title-line"><span class="flag">🇦🇷</span>Suelte la perilla de regulación y pase a temperatura deseada</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Release, switch to comfort temperature &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Solte e vá para temperatura desejada</div>
+      </div>
+
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- APAGADO -->
+    <div class="section-title">⛔ Apagado</div>
+
+    <div class="steps-wrap">
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-titles">
+          <div class="step-title-line"><span class="flag">🇦🇷</span>Gire la Perilla de regulación a Piloto. No girar a Cerrado</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Turn the regulating knob to Pilot. Do not turn it to Closed. &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Gire o de regulagem para a posição "Piloto". Não o mova para a posição "Fechado"</div>
+        </div>
+      </div>
+
+
+  </div>
+</div>
+
+<script>
+function openGuide() {
+  document.getElementById('screen-lang').classList.remove('active');
+  document.getElementById('screen-guide').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goBack() {
+  document.getElementById('screen-guide').classList.remove('active');
+  document.getElementById('screen-lang').classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
