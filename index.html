@@ -191,7 +191,7 @@
     border-radius: var(--radius);
     padding: 14px 16px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 14px;
   }
 
@@ -204,21 +204,22 @@
     font-weight: 700;
     color: #1a1612;
     flex-shrink:0;
+    margin-top: 1px;
   }
 
-  .step-titles { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+  .step-titles { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
   .step-title-line {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 7px;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
     font-size: 14.5px;
     color: var(--text);
-    line-height: 1.35;
+    line-height: 1.42;
   }
-  .step-title-line.sub { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; color: var(--text3); }
-  .step-title-line .flag { font-size: 13px; flex-shrink:0; }
+  .step-title-line.sub { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 12px; color: var(--text3); line-height: 1.45; }
+  .step-title-line .flag { font-size: 13px; flex-shrink:0; margin-top: 2px; }
 
   .timer-chip {
     flex-shrink: 0;
@@ -230,6 +231,7 @@
     border-radius: 20px;
     padding: 5px 11px;
     white-space: nowrap;
+    margin-top: 1px;
   }
 
   .sep {
@@ -367,7 +369,8 @@
         <div class="step-num">1</div>
         <div class="step-titles">
           <div class="step-title-line"><span class="flag">🇦🇷</span>Abra la llave de gas</div>
-          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Open gas valve &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Abra o registro</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Open gas valve</div>
+          <div class="step-title-line sub"><span class="flag">🇧🇷</span>Abra o registro</div>
         </div>
       </div>
 
@@ -375,21 +378,27 @@
         <div class="step-num">2</div>
         <div class="step-titles">
           <div class="step-title-line"><span class="flag">🇦🇷</span>Posicionar perilla en Piloto y presionarla. Dar disparo de encendedor píezoeléctrico manteniendo presionada la perilla de regulación</div>
-          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Turn to Pilot and press the knob. Hit the Igniter while pressing the knob &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Posicionar o botão em Piloto e pressioná-lo. Acionar o acendedor enquanto mantém pressionado o botão regulador.</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Turn to Pilot and press the knob. Hit the Igniter while pressing the knob</div>
+          <div class="step-title-line sub"><span class="flag">🇧🇷</span>Posicionar o botão em Piloto e pressioná-lo. Acionar o acendedor enquanto mantém pressionado o botão regulador.</div>
+        </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-titles">
           <div class="step-title-line"><span class="flag">🇦🇷</span>Mantenga presionada la perilla de regulación durante 10" o más si es necesario para que la llama quede encendida</div>
-          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Press and hold the control knob for 10 seconds or longer if necessary to keep the flame lit &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Mantenha o botão de regulagem pressionado por 10" ou mais, se necessário, para que a chama continue acesa</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Press and hold the control knob for 10 seconds or longer if necessary to keep the flame lit</div>
+          <div class="step-title-line sub"><span class="flag">🇧🇷</span>Mantenha o botão de regulagem pressionado por 10" ou mais, se necessário, para que a chama continue acesa</div>
+        </div>
       </div>
 
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-titles">
           <div class="step-title-line"><span class="flag">🇦🇷</span>Suelte la perilla de regulación y pase a temperatura deseada</div>
-          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Release, switch to comfort temperature &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Solte e vá para temperatura desejada</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Release, switch to comfort temperature</div>
+          <div class="step-title-line sub"><span class="flag">🇧🇷</span>Solte e vá para temperatura desejada</div>
+        </div>
       </div>
 
     </div>
@@ -405,10 +414,12 @@
         <div class="step-num">5</div>
         <div class="step-titles">
           <div class="step-title-line"><span class="flag">🇦🇷</span>Gire la Perilla de regulación a Piloto. No girar a Cerrado</div>
-          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Turn the regulating knob to Pilot. Do not turn it to Closed. &nbsp;·&nbsp; <span class="flag">🇧🇷</span>Gire o de regulagem para a posição "Piloto". Não o mova para a posição "Fechado"</div>
+          <div class="step-title-line sub"><span class="flag">🇬🇧</span>Turn the regulating knob to Pilot. Do not turn it to Closed.</div>
+          <div class="step-title-line sub"><span class="flag">🇧🇷</span>Gire o de regulagem para a posição "Piloto". Não o mova para a posição "Fechado"</div>
         </div>
       </div>
 
+    </div>
 
   </div>
 </div>
